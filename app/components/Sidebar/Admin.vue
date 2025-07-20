@@ -2,7 +2,7 @@
 import type { SidebarProps } from '@/components/ui/sidebar'
 
 import {
-  LucideAudioWaveform,
+  AudioWaveform,
   BookOpen,
   Bot,
   Command,
@@ -11,7 +11,8 @@ import {
   Map,
   PieChart,
   Settings2,
-  SquareTerminal,
+  ChartColumn,
+  Users
 } from 'lucide-vue-next'
 
 
@@ -26,7 +27,7 @@ import {
 const props = withDefaults(defineProps<SidebarProps>(), {
   collapsible: 'icon',
 })
-
+const store = useAuthStore()
 // This is sample data.
 const data = {
   user: {
@@ -42,7 +43,7 @@ const data = {
     },
     {
       name: 'Acme Corp.',
-      logo: LucideAudioWaveform,
+      logo: AudioWaveform,
       plan: 'Startup',
     },
     {
@@ -53,10 +54,9 @@ const data = {
   ],
   navMain: [
     {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
-      isActive: true,
+      title: 'Dashboard',
+      url: '/apps/admin',
+      icon: ChartColumn,
       items: [
         {
           title: 'History',
@@ -73,9 +73,9 @@ const data = {
       ],
     },
     {
-      title: 'Models',
-      url: '#',
-      icon: Bot,
+      title: 'Managers',
+      url: '/apps/admin/managers',
+      icon: Users,
       items: [
         {
           title: 'Genesis',
@@ -91,52 +91,52 @@ const data = {
         },
       ],
     },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Settings',
-      url: '#',
-      icon: Settings2,
-      items: [
-        {
-          title: 'General',
-          url: '#',
-        },
-        {
-          title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
-          url: '#',
-        },
-      ],
-    },
+    // {
+    //   title: 'Documentation',
+    //   url: '#',
+    //   icon: BookOpen,
+    //   items: [
+    //     {
+    //       title: 'Introduction',
+    //       url: '#',
+    //     },
+    //     {
+    //       title: 'Get Started',
+    //       url: '#',
+    //     },
+    //     {
+    //       title: 'Tutorials',
+    //       url: '#',
+    //     },
+    //     {
+    //       title: 'Changelog',
+    //       url: '#',
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: 'Settings',
+    //   url: '#',
+    //   icon: Settings2,
+    //   items: [
+    //     {
+    //       title: 'General',
+    //       url: '#',
+    //     },
+    //     {
+    //       title: 'Team',
+    //       url: '#',
+    //     },
+    //     {
+    //       title: 'Billing',
+    //       url: '#',
+    //     },
+    //     {
+    //       title: 'Limits',
+    //       url: '#',
+    //     },
+    //   ],
+    // },
   ],
   projects: [
     {
@@ -164,11 +164,11 @@ const data = {
       <SidebarTeamSwitcher :teams="data.teams" />
     </SidebarHeader>
     <SidebarContent>
-      <NavMain :items="data.navMain" />
-      <SidebarNavProjects :projects="data.projects" />
+      <SidebarNavMain :items="data.navMain" />
+      <!-- <SidebarNavProjects :projects="data.projects" /> -->
     </SidebarContent>
     <SidebarFooter>
-      <SidebarNavUser :user="data.user" />
+      <SidebarNavUser :user="store.user!" />
     </SidebarFooter>
     <SidebarRail />
   </Sidebar>

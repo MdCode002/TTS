@@ -28,15 +28,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-
+import { type AppUser}  from '@/types/user'
 const props = defineProps<{
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
+  user: AppUser
 }>()
-
+const  store = useAuthStore()
 const { isMobile } = useSidebar()
 </script>
 
@@ -50,13 +46,13 @@ const { isMobile } = useSidebar()
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <Avatar class="h-8 w-8 rounded-lg">
-              <AvatarImage :src="user.avatar" :alt="user.name" />
+              <AvatarImage src="/avatars/shadcn.jpg" :alt="user.fullName" />
               <AvatarFallback class="rounded-lg">
                 CN
               </AvatarFallback>
             </Avatar>
             <div class="grid flex-1 text-left text-sm leading-tight">
-              <span class="truncate font-semibold">{{ user.name }}</span>
+              <span class="truncate font-medium">{{ user.fullName }}</span>
               <span class="truncate text-xs">{{ user.email }}</span>
             </div>
             <ChevronsUpDown class="ml-auto size-4" />
@@ -71,44 +67,25 @@ const { isMobile } = useSidebar()
           <DropdownMenuLabel class="p-0 font-normal">
             <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar class="h-8 w-8 rounded-lg">
-                <AvatarImage :src="user.avatar" :alt="user.name" />
+                <AvatarImage src="/avatars/shadcn.jpg" :alt="user.fullName" />
                 <AvatarFallback class="rounded-lg">
                   CN
                 </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-semibold">{{ user.name }}</span>
+                <span class="truncate font-semibold">{{ user.fullName }}</span>
                 <span class="truncate text-xs">{{ user.email }}</span>
+                <span class="truncate font-bold">{{ user.role }}</span>
+
               </div>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <Sparkles />
-              Upgrade to Pro
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <BadgeCheck />
-              Account
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard />
-              Billing
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Bell />
-              Notifications
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
+   
+          <DropdownMenuItem @click="store.logout" class="">
             <LogOut />
-            Log out
-          </DropdownMenuItem>
+            Deconnexion
+                    </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </SidebarMenuItem>
